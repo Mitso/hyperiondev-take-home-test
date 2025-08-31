@@ -22,6 +22,18 @@ export default defineNuxtConfig({
       'Montserrat': [400, 500, 600, 700]
     }
   },
+  // Runtime configuration
+  runtimeConfig: {
+    databaseUrl: process.env.DATABASE_URL,
+    public: {
+      //apiBase: process.env.API_BASE || 'https://api.example.com',
+      appUrl: process.env.APP_URL || 'http://localhost:3000',
+      googleClientId: process.env.GOOGLE_CLIENT_ID,
+      googleRedirectUri: process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/google'
+    }
+  },
+  // Server-side rendering configuration
+  ssr: true,
   app: {
     head: {
       title: 'HyperionDev Take-Home Test',
@@ -35,4 +47,10 @@ export default defineNuxtConfig({
       ]
     }
   },
+  // Nitro configuration for serverless deployment
+  nitro: {
+    experimental: {
+      wasm: true
+    }
+  }
 })

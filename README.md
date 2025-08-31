@@ -9,14 +9,6 @@ Build the application for production:
 # npm
 npm run build
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
@@ -25,15 +17,8 @@ Locally preview production build:
 # npm
 npm run preview
 
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
+
 
 ---
 
@@ -52,18 +37,15 @@ Enviroment specific issues:
 ### Project Overview
 - **Framework:** Nuxt 3 (Vue 3, Vite, TypeScript)
 - **UI:** TailwindCSS, Google Fonts, custom SCSS (`assets/styles/main.scss`)
-- **State Management:** Pinia
 - **Pages:** All routes/pages are in `app/pages/` (e.g., `index.vue` for registration)
 - **App Shell:** `app/app.vue` defines the main layout, header, footer, and navigation.
 
 ### Key Patterns & Conventions
-- **Global Styles:** Import global SCSS in `app/app.vue` (not via Nuxt config).
 - **Component Structure:** Use `<script setup>` and composition API for logic.
 - **Form Handling:** Validation and error state are managed reactively in-page (see `index.vue`).
 - **API Calls:** Use `$fetch` for server communication (e.g., `/api/auth/register`).
 - **Navigation:** Use `navigateTo()` for client-side routing.
 - **Meta/SEO:** Use `useHead()` in each page for meta tags.
-- **No explicit backend/API code** is present—API endpoints are assumed to exist or be mocked.
 
 ### Developer Workflows
 - **Development:**
@@ -98,5 +80,3 @@ Enviroment specific issues:
 - **No test or lint scripts are defined—add as needed.**
 
 ---
-
-For more, see `README.md` for build/preview commands. When in doubt, follow the patterns in `app/pages/index.vue` and `app/app.vue`.

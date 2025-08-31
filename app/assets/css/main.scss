@@ -82,8 +82,18 @@ html, body {
 /* Elements base styles */
 
 .header {
-    background-color: var(--very-dark-blue);
+    background-color: var(--dark-blue);
     opacity: 0.95; 
+}
+
+.footer {
+    background-color: var(--dark-blue);
+    &-text {
+        color: var(--dark-moderate-blue);
+        font-family: var(--font-primary);
+        font-size: var(--small-xx);
+        font-weight: 100;
+    }
 }
 
 .nav {
@@ -92,7 +102,20 @@ html, body {
         font-family: var(--font-primary);
         font-size: var(--small);
         font-weight: 100;
-
+        &:hover {
+            color: var(--gold);
+            text-decoration: underline;
+        }
+    }
+    &-cta__btn {
+        background-color: transparent;
+        font-family: var(--font-primary);
+        font-size: var(--small);
+        font-weight: 100;
+        &:hover {
+            background-color: var(--gold);
+            border-color: var(--gold);
+        }
     }
 }
 
@@ -114,14 +137,44 @@ html, body {
             &:hover {
                 color: var(--gold);
                 text-decoration: underline;
+                .dropdown-arrow {
+                    svg {
+                        path {
+                            stroke: var(--gold);
+                        }
+                    }
+                }
+            }
+            &-highlight {
+                background-color: var(--gold);
+                border-radius: 5px;
+                padding: 10px 15px;
+                font-weight: 600;
+                color: white;
+                &:hover {
+                    background-color: var(--dark-gold);
+                    text-decoration: none;
+                    color: var(--very-light-gray_0);
+                    .dropdown-arrow {
+                        svg {
+                            path {
+                                stroke: var(--very-light-gray_0);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
-
+.router-link-exact-active {
+    color: var(--gold);
+    text-decoration: underline;
+}
 
 .left-column {
+    //background-color: var(--moderate-blue);
     background-color: var(--very-dark-gray-1);
     background-image: url('../images/register-image.jpg');
     background-size: cover;
@@ -133,7 +186,9 @@ html, body {
         background-color: rgba(16,52,82,0.85);
     }
 }
-
+.right-column  {
+  background-color: white;
+}
 
 .account-register {
     &__heading,
@@ -142,6 +197,9 @@ html, body {
     }
 }
 
+.signup-field {
+    min-height: 70px;
+}
 .signup-input {
     background-color: transparent;
     border: 2px solid var(--light-gray);
@@ -154,21 +212,29 @@ html, body {
     width: 100%;
     
     &:focus {
-        border-color: var(--light-gray_1);
+        border-color: var(--light-gray);
         outline: none;
-        box-shadow: inset 0 1px 1px var(--very-light-gray_0), 0 0 8px var(--very-light-gray_0);
+        box-shadow: 0 0 0 3px rgba(196,196,196, 0.2);
     }
     &:placeholder {
-        color: vsr(--very-light-gray_5);
+        color: var(--very-light-gray_5);
         opacity: 1; /* Ensures placeholder is fully opaque */
     }
 }
 
-.signup-checkbox,
+.signup-checkbox {
+    &:checked {
+        background-color: var(--dark-blue);
+        border-color: var(--dark-blue);
+    }
+}
+
 .signup-agreement-opts,
 .signup-consent,
 .signup-divider-line,
 .signup-divider-txt,
 .signup-google-cta {
-    border-color: var(--very-dark-blue);
+    color: var(--very-dark-blue);
 }
+
+

@@ -17,37 +17,56 @@
     <header class="header h-18 px-4 lg:px-12 py-4 shadow-md w-full">
       <nav class="nav flex items-center justify-between flex justify-between items-center ">
         <div class="menu flex space-x-8">
-            <a href="#" class="logo">
-              <img 
-                alt="HyperionDev" 
-                src="/logo.svg" 
-                width="170"
-                height="auto"
-                class="logo__image"
-              />
-            </a>
-            <ul class="menu-list flex items-center">
-              <li class="menu-list__item">
-               <button class="menu-list__link rounded-md bg-yellow-600">Explore courses</button>
-              </li>
-              <li class="menu-list__item">
-                <a href="#" class="menu-list__link">Study options</a>
-              </li>
-              <li class="menu-list__item">
-                <a href="#" class="menu-list__link">Pricing</a>
-              </li>
-              <li class="menu-list__item">
-                <a href="#" class="menu-list__link">Reviews</a>
-              </li>
-              <li class="menu-list__item">
-                <a href="#" class="menu-list__link">Contact us</a>
-              </li>
-            </ul>
+          <NuxtLink to="/" class="logo">
+            <img 
+              alt="HyperionDev" 
+              src="/logo.svg" 
+              width="170"
+              height="auto"
+              class="logo__image"
+            />
+          </NuxtLink>
+          <ul class="menu-list flex items-center">
+            <li class="menu-list__item">
+              <button class="menu-list__link menu-list__link-highlight dropdown !flex items-center justify-between space-x-1">
+                <span>Explore courses</span>
+                <span class="dropdown-arrow">
+                  <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.7081 1.5813L6.48605 6.7832L1.42505 1.7017" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>            
+                </span>
+              </button>
+            </li>
+            <li class="menu-list__item">
+              <a href="#" class="menu-list__link dropdown !flex items-center justify-between space-x-1">
+                <span>Study options</span>
+                <span class="dropdown-arrow">
+                <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.7081 1.5813L6.48605 6.7832L1.42505 1.7017" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>            
+              </span>
+              </a>
+            </li>
+            <li class="menu-list__item">
+              <a href="#" class="menu-list__link">Pricing</a>
+            </li>
+            <li class="menu-list__item">
+              <a href="#" class="menu-list__link">Reviews</a>
+            </li>
+            <li class="menu-list__item">
+              <a href="#" class="menu-list__link">Contact us</a>
+            </li>
+          </ul>
         </div>
+        
         <div class="nav-cta flex center items-center space-x-4">
-          <button class="nav-cta__item text-white hover:text-gray-800">Log in</button>
+          <div class="flex justify-center items-center space-x-2">
+            <NuxtLink to="/" class="nav-cta__item text-white hover:text-gray-800">Sign Up</NuxtLink>
+            <span class="nav-cta__item block">/</span>
+            <button class="nav-cta__item text-white hover:text-gray-800">Sign In</button>
+          </div>
           <span class="nav-cta__item block w-[2px] h-8 bg-white"></span>
-          <button class="nav-cta__item border-2 border-white text-white px-4 py-1 rounded">Begin trial</button>
+          <button class="nav-cta__btn border-2 border-white text-white px-4 py-1 rounded">Begin trial</button>
         </div>
       </nav>
     </header>
@@ -63,20 +82,9 @@
   
   <!-- Start: Footer Section -->
     <!-- Bottom navigation -->
-    <footer class="footer flex justify-center space-x-8 p-6 border-t">
+    <footer class="footer flex justify-center p-6">
       <div class="footer__content">
-        <button class="p-3 text-gray-400 hover:text-gray-600">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-          </svg>
-          <span class="block text-xs mt-1">Home</span>
-        </button>
-        <button class="p-3 text-gray-400 hover:text-gray-600">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 2.5l3.5 2.5-3.5 2.5v-5zM4 6l8 5 8-5v12H4V6z"/>
-          </svg>
-          <span class="block text-xs mt-1">Messages</span>
-        </button>
+        <p class="footer-text">© HyperionDev. All rights reserved.</p>
       </div>
     </footer>
   <!-- End: Footer Section -->
