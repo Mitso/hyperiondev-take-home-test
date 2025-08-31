@@ -25,10 +25,13 @@
           <!-- Progress indicator -->
           <div class="info-step-indicator flex items-center justify-center mb-8">
               <div class="flex items-center">
-              <span class="text-yellow-600 text-sm font-medium mr-4">Step 1 of 2</span>
+              <span class="text-yellow-600 text-sm font-medium mr-4">Step {{  currentStep  }} of 2</span>
               <div class="flex space-x-2">
                   <div class="w-32 h-2 bg-yellow-500 rounded-full"></div>
-                  <div class="w-32 h-2 bg-gray-300 rounded-full"></div>
+                  <div 
+                    class="w-32 h-2 bg-gray-300 rounded-full"
+                    :class="{ 'bg-yellow-500': currentStep > 1 }"
+                  ></div>
               </div>
               </div>
           </div>
