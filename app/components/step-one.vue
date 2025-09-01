@@ -1,6 +1,6 @@
 <template>  
     <!-- Form -->
-    <form @submit="saveAndContinue" class="bootcamp-reg-form step-1 max-w-4xl mx-auto">
+    <form class="bootcamp-reg-form step-1 max-w-4xl mx-auto">
         <div class="step-1--inner bg-white rounded-lg shadow-sm border border-gray-200 p-8">
             <div class="space-y-6">
                 <!-- Reason for registering -->
@@ -172,6 +172,7 @@
             <button
                 type="submit"
                 :disabled="!isFormValid || isSubmitting"
+                @click.prevent="saveAndContinue" 
                 class="step-1-continue px-8 py-3 text-black font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {{ isSubmitting ? 'Saving...' : 'Continue' }}
@@ -181,7 +182,6 @@
 </template>
 
 <script setup>
-
 const emit = defineEmits(['next']);
 // Form state
 const form = reactive({
@@ -207,59 +207,24 @@ const isFormValid = computed(() => {
     form.countryOfResidence
 })
 
-
-// Prevent navigation away without saving
-onBeforeRouteLeave((to, from) => {
-  if (isSubmitting.value) {
-    return false
-  }
-  
-  // Check if form has unsaved changes
-  const hasChanges = Object.values(form).some(value => value !== '' && value !== 'ZA' && value !== '+27')
-  
-  if (hasChanges && !confirm('You have unsaved changes. Are you sure you want to leave?')) {
-    return false
-  }
-})
-
 // Save and continue handler
 const saveAndContinue = async () => {
-  if (!isFormValid.value) {
-    return
-  } 
+    if (!isFormValid.value) {
+        return
+    } 
     isSubmitting.value = true
-    try {
-        // // Save step 1 data to localforage
-        // // In a real app, you would send this data to your backend API
-        // // Here we simulate an API call with a timeout
-        // await new Promise(resolve => setTimeout(resolve, 1000))
-        // const data = await localforage.setItem('course_registration', {
-        //     body: {
-        //         ...form,
-        //         phoneNumber: form.phoneCountryCode + form.phoneNumber
-        //     }
-        // })
-  
-        // console.log('Step 1: Success:', data)
-      
-        // Emit event to parent to go to next step
-        emit('next', {
-            step: 1,
-            data: form
-        })
-      
-    } catch (error) {
-      console.error('Step 1: Error:', error)
-       // Optionally show error to user
-      if (error.data?.message) {
-        alert(error.data.message)
-      } else {
-        alert('Failed to save information. Please try again.')
-      }
-    } finally {
-        console.error('Step 1:', error)
-        isSubmitting.value = false
-    }
+    // Emit event to parent to go to next step
+    emit('next', {
+        data: {
+            reasonForRegistering: form.reasonForRegistering,
+            contentKnowledge: form.contentKnowledge,
+            educationBackground: form.educationBackground,
+            age: form.age,
+            gender: form.gender,
+            countryOfResidence: form.countryOfResidence,
+            phoneNumber: form.phoneCountryCode + form.phoneNumber
+        }
+    })
 }
 
 </script>

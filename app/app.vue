@@ -12,7 +12,7 @@
     </div>
   <!-- End: Other Sections -->
 
-  <!-- Start: Header Section -->
+  <!-- Start: Primary Header Section -->
     <!-- Navigation -->
     <header class="header h-18 px-4 lg:px-12 py-4 shadow-md w-full">
       <nav class="nav flex items-center justify-between flex justify-between items-center ">
@@ -61,16 +61,38 @@
         
         <div class="nav-cta flex center items-center space-x-4">
           <div class="flex justify-center items-center space-x-2">
-            <NuxtLink to="/" class="nav-cta__item text-white hover:text-gray-800">Sign Up</NuxtLink>
-            <span class="nav-cta__item block">/</span>
-            <button class="nav-cta__item text-white hover:text-gray-800">Sign In</button>
+            <template v-if="userAuth.isAuth">
+              <NuxtLink v-if="!isSignedIn" to="/login" class="nav-cta__item text-white hover:text-gray-800">Sign In</NuxtLink>
+              <NuxtLink to="/account/dashboard" class="nav-cta__item text-white hover:text-gray-800">Dashboard</NuxtLink>
+              <span class="nav-cta__item block w-[2px] h-8 bg-white"></span>
+              <button @click="logout" class="nav-cta__btn border-2 border-white text-white px-4 py-1 rounded">Log out</button>
+            </template>
+            <template v-else>
+                <NuxtLink to="/" class="nav-cta__item text-white hover:text-gray-800">Sign Up</NuxtLink>
+                <span class="nav-cta__item block">/</span>
+                <NuxtLink to="/login" class="nav-cta__item text-white hover:text-gray-800">Sign In</NuxtLink>
+                <span class="nav-cta__item block w-[2px] h-8 bg-white"></span>
+                <button class="nav-cta__btn border-2 border-white text-white px-4 py-1 rounded">Begin trial</button>
+            </template>
+           
+           
           </div>
-          <span class="nav-cta__item block w-[2px] h-8 bg-white"></span>
-          <button class="nav-cta__btn border-2 border-white text-white px-4 py-1 rounded">Begin trial</button>
         </div>
       </nav>
     </header>
-  <!-- End: Header Section -->
+  <!-- End: Primary Header Section -->
+
+  <!-- Start: Secondary Header Section -->
+  <header v-if="userAuth.isAuth" class="bootcamp-secondary-header secondary-header bg-slate-800 text-white py-4 px-12">
+      <div class="secondary-header-inner flex items-center justify-center">
+        <NuxtLink to="/course/register/software-engineering" class="menu-list__link">Contact course Adviser</NuxtLink>
+        <a href="#" class="menu-list__link">My Profile</a>
+        <button class="menu-list__link menu-list__link-highlight text-white px-4 py-1 rounded">Upgrade to full Bootcamp</button>
+           
+      </div>
+  </header>
+  <!-- StEndart: Secondary Header Section -->
+  Global userAuth value = {{ userAuth.isAuth }}
 
   <!-- Start: Body Section -->
     <!-- <NuxtWelcome /> -->
@@ -89,3 +111,44 @@
     </footer>
   <!-- End: Footer Section -->
 </template>
+
+<script setup>
+  import localforage from 'localforage';
+ 
+  const { userAuth, setUserAuth } = useStore()
+
+  const userData = ref(null);
+ 
+  const isSignedIn = ref(false);
+
+  onMounted(async () => {
+    console.log('Global App Page: On mounted');
+    // Check if user is technically authenticated and get their basic info
+    try {
+      userData.value = await localforage.getItem('user')
+      if (userData.value) {
+        setUserAuth(true)
+
+        isSignedIn.value = userData.value.signedIn ?? false;
+      }
+    } catch (error) {
+      setUserAuth(false)
+      // If not technically authenticated, redirect to signup
+      await navigateTo('/')
+    }
+  })
+ 
+  
+  const logout = async () => {
+    try {
+      await localforage.removeItem('user');
+      await localforage.removeItem('courseRegForm');
+     
+      setUserAuth(false)
+
+      await navigateTo('/');
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  }
+</script>

@@ -1,15 +1,8 @@
 <!-- Pages - course/register/software-engineering.vue -->
 <template>
     <div class="bootcamp min-h-screen bg-gray-50">
-    <!-- Secondary Header -->
-    <header class="bootcamp-secondary-header secondary-header bg-slate-800 text-white py-4 px-12">
-        <div class="secondary-header-inner flex items-center justify-center">
-        <NuxtLink to="/course/register/software-engineering" class="menu-list__link">Course</NuxtLink>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="bootcamp-info info max-w-4xl mx-auto py-12 px-6">
+      <!-- Main Content -->
+      <div class="bootcamp-info info max-w-4xl mx-auto py-12 px-6">
         <!-- Registration Header -->
         <div class="info-header text-center mb-8">
           <div class="info-intro flex items-center justify-center mb-6">
@@ -37,108 +30,17 @@
           </div>
           </div>
           <!-- Registration Form -->
-          <component :is="activeComponent" @next="handleNext" @prev="handlePrev" @submit="handleSubmit" />
+          <component 
+            :is="activeComponent" 
+            @next="handleGoToStep2"
+            @prev="handleGoBackToStep1" 
+            @submit="handleAllStepsFormSubmit" />
       </div>
     </div>
 </template>
 
 <script setup>
 import localforage from 'localforage';
-const stepOne = defineAsyncComponent(() => import('~/components/step-one.vue'));
-const stepTwo = defineAsyncComponent(() => import('~/components/step-two.vue'));
-
-// Get user data from previous step (from route params, store, or API)
-const route = useRoute()
-const router = useRouter()
-
-const courseRegForm = reactive({
-  reasonForRegistering: '',
-  contentKnowledge: '',
-  educationBackground: '',
-  age: '',
-  gender: '',
-  countryOfResidence: 'ZA', // Default to South Africa
-  phoneCountryCode: '+27',
-  phoneNumber: '',
-  employmentStatus: '',
-  learningSchedule: '',
-  referralSource: ''
-});
-const currentStep = ref(1);
-const handleNext = (payload) => {
-  // Save data from the previous step
-  Object.assign(courseRegForm, payload.data);
-  // Move to the next step
-  currentStep.value = 2;
-};
-
-const handlePrev = () => {
-  // Move back to the previous step
-  currentStep.value = 1;
-};
-
-
-// Load user's basic info if available
-// onMounted(async () => {
-//   console.log('Bootcamp page mounted', route, router);
-//   try {
-//     // Check if user is authenticated and get their basic info
-//     const userData = await localforage.getItem('user')
-//     if (userData) {
-//       console.log('User data loaded:', userData)
-//     }
-//   } catch (error) {
-//     // If not authenticated, redirect to signup
-//     await navigateTo('/')
-//   }
-// })
-
-const activeComponent = computed(() => {
-  if (currentStep.value === 1) {
-    return stepOne;
-  } else {
-    return stepTwo;
-  }
-});
-
-// Form submission handler
-const handleSubmit = async (event) => {
-  event.preventDefault()
-  
-  if (!isFormValid.value) {
-    return
-  }
-
-  try {
-    // Save step 1 data to localforage
-    // In a real app, you would send this data to your backend API
-    // Here we simulate an API call with a timeout
-    // await new Promise(resolve => setTimeout(resolve, 1000))
-    // const courseData = await localforage.setItem('course_registration', {
-    //     body: {
-    //       ...form,
-    //       phoneNumber: form.phoneCountryCode + form.phoneNumber
-    //     }
-    //   })
-
-    console.log('Software engineering: Form submission success')
-    
-    // Navigate to step 2
-    //await navigateTo('/registration/step2')
-    
-  } catch (error) {
-    console.error('Software engineering: Form submission error:', error)
-    
-    // if (error.data?.message) {
-    //   alert(error.data.message)
-    // } else {
-    //   alert('Failed to save information. Please try again.')
-    // }
-  } finally {
-    console.error('Software engineering: Form submission complete')
-  }
-}
-
 
 // SEO
 useHead({
@@ -148,4 +50,78 @@ useHead({
     { name: 'robots', content: 'noindex' } // Don't index registration pages
   ]
 })
+
+const stepOne = defineAsyncComponent(() => import('~/components/step-one.vue'));
+const stepTwo = defineAsyncComponent(() => import('~/components/step-two.vue'));
+
+const courseRegFormStep1 = reactive({
+  reasonForRegistering: '',
+  contentKnowledge: '',
+  educationBackground: '',
+  age: '',
+  gender: '',
+  countryOfResidence: 'ZA', // Default to South Africa
+  phoneNumber: '',
+});
+
+const courseRegFormStep2 = reactive({
+  contentKnowledge: '',
+  employmentStatus: '',
+  learningSchedule: ''
+});
+
+const currentStep = ref(1);
+
+const route = useRoute()
+const router = useRouter()
+
+// Watch for changes in the route's query parameter and update the step
+watch(() => route.query.step, (newStep) => {
+  if (newStep) {
+    currentStep.value = parseInt(newStep, 10);
+  } else {
+    // If no query parameter exists, always default to step 1
+    currentStep.value = 1;
+  }
+}, { immediate: true });
+
+const handleGoToStep2 = (payload) => {
+  //Step 1: Data Save
+  Object.assign(courseRegFormStep1, payload.data);
+
+  //Route to Step 2
+  router.push({ query: { ...route.query, step: 2 } });
+};
+
+const handleGoBackToStep1 = () => {
+  //Route to Step 1
+  router.push({ query: { ...route.query, step: 1 } });
+};
+
+// Form submission handler
+const handleAllStepsFormSubmit = async (payload) => {
+  //Step 2: Data Save
+  Object.assign(courseRegFormStep2, payload.data);
+  
+  try {
+    const courseData = await localforage.setItem('courseRegForm', {
+      body: {
+        ...courseRegFormStep1,
+        ...courseRegFormStep2
+      }
+    })
+    console.log('Software engineering: Form data saved locally', courseData)
+    router.push('/account/dashboard')
+  } catch (error) {
+    console.error('Software engineering: Error saving form data:', error)
+    alert('Failed to save information. Please try again.')
+  } finally {
+    console.error('Software engineering: Form submission complete')
+  }
+}
+
+const activeComponent = computed(() => {
+  return currentStep.value === 1 ? stepOne : stepTwo;
+});
+
 </script>

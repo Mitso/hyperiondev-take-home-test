@@ -137,134 +137,129 @@
 </template>
 
 <script setup>
-import localforage from 'localforage';
-
-// SEO and meta
-useHead({
-  title: 'Create your account - HyperionDev',
-  meta: [
-    { name: 'description', content: 'Join HyperionDev and start your journey to a 178% salary increase. Create your account today.' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-  ]
-})
-
-// Form state
-const form = reactive({
-  fullName: '',
-  email: '',
-  password: '',
-  agreeToTerms: false
-})
-
-// Form validation errors
-const errors = reactive({
-  fullName: '',
-  email: '',
-  password: ''
-})
-
-// Loading state
-const isSubmitting = ref(false);
-
-// Validation function
-const validateForm = () => {
-  // Reset errors
-  Object.keys(errors).forEach(key => {
-    errors[key] = ''
+  import localforage from 'localforage';
+   
+  // SEO and meta
+  useHead({
+    title: 'Create your account - HyperionDev',
+    meta: [
+      { name: 'description', content: 'Join HyperionDev and start your journey to a 178% salary increase. Create your account today.' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ]
   })
 
-  let isValid = true
+  onMounted(() => {
+    console.log('Index Page: On mounted');
+  })
 
-  // Validate full name
-  if (!form.fullName.trim()) {
-    errors.fullName = 'Full name is required'
-    isValid = false
-  } else if (form.fullName.trim().length < 2) {
-    errors.fullName = 'Full name must be at least 2 characters'
-    isValid = false
+  // Form state
+  const form = reactive({
+    fullName: '',
+    email: '',
+    password: '',
+    agreeToTerms: false
+  })
+
+  // Form validation errors
+  const errors = reactive({
+    fullName: '',
+    email: '',
+    password: ''
+  })
+
+  // Loading state
+  const isSubmitting = ref(false);
+
+  // Validation function
+  const validateForm = () => {
+    // Reset errors
+    Object.keys(errors).forEach(key => {
+      errors[key] = ''
+    })
+
+    let isValid = true
+
+    // Validate full name
+    if (!form.fullName.trim()) {
+      errors.fullName = 'Full name is required'
+      isValid = false
+    } else if (form.fullName.trim().length < 2) {
+      errors.fullName = 'Full name must be at least 2 characters'
+      isValid = false
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!form.email.trim()) {
+      errors.email = 'Email address is required'
+      isValid = false
+    } else if (!emailRegex.test(form.email)) {
+      errors.email = 'Please enter a valid email address'
+      isValid = false
+    }
+
+    // Validate password
+    if (!form.password) {
+      errors.password = 'Password is required'
+      isValid = false
+    } else if (form.password.length < 8) {
+      errors.password = 'Password must be at least 8 characters'
+      isValid = false
+    }
+
+    return isValid
   }
 
-  // Validate email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!form.email.trim()) {
-    errors.email = 'Email address is required'
-    isValid = false
-  } else if (!emailRegex.test(form.email)) {
-    errors.email = 'Please enter a valid email address'
-    isValid = false
-  }
+  // Form submission handler
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
 
-  // Validate password
-  if (!form.password) {
-    errors.password = 'Password is required'
-    isValid = false
-  } else if (form.password.length < 8) {
-    errors.password = 'Password must be at least 8 characters'
-    isValid = false
-  }
+    if (!form.agreeToTerms) {
+      alert('Please agree to the Terms & Conditions and Privacy Policy')
+      return
+    }
 
-  return isValid
-}
+    isSubmitting.value = true
 
-// Form submission handler
-const handleSubmit = async (event) => {
-  event.preventDefault()
-  
-  if (!validateForm()) {
-    return
-  }
-
-  if (!form.agreeToTerms) {
-    alert('Please agree to the Terms & Conditions and Privacy Policy')
-    return
-  }
-
-  isSubmitting.value = true
-
-  // Call the server API endpoint
-  try {
-    const data = await localforage.setItem('user', {
+    try {
+      const data = await localforage.setItem('user', {
         fullName: form.fullName.trim(),
         email: form.email.trim().toLowerCase(),
         password: form.password,
-        jwt: 'fake-jwt-token'
+        jwt: 'fake-jwt-token',
+        signedIn: true
       })
 
-    // Handle success
-    console.log('Registration successful:', data)
+      // Handle success
+      console.log('Registration successful:', data)
 
-    // Redirect to success registration page step !!!
-    await navigateTo('/course/register/software-engineering')
-  } catch (error) {
-    console.error('Registration error:', error)
-    
-    // Handle specific error cases
-    // if (error.data?.message) {
-    //   if (error.data.message.includes('email')) {
-    //     errors.email = error.data.message
-    //   } else if (error.data.message.includes('password')) {
-    //     errors.password = error.data.message
-    //   } else {
-    //     alert(error.data.message)
-    //   }
-    // } else {
-    //   alert('Registration failed. Please try again.')
-    // }
-  } finally {
-    isSubmitting.value = false
+      // Redirect to success registration page step !!!
+      await navigateTo({
+        path: '/course/register/software-engineering',
+        query: { step: 1 }
+      })
+    } catch (error) {
+      console.error('Registration error:', error)
+      alert('Registration failed. Please try again.')
+    } finally {
+      isSubmitting.value = false
+    }
   }
-}
 
-// Google sign up handler
-const signUpWithGoogle = async (e) => {
-  e.preventDefault();
-  alert('Google sign up functionality simulation. Redirecting to Google OAuth...');
-  // try {
-  //   // Redirect to Google OAuth endpoint
-  //   window.location.href = '/api/auth/google'
-  // } catch (error) {
-  //   console.error('Google sign up error:', error)
-  //   alert('Google sign up is currently unavailable. Please try again later.')
-  // }
-}
+  // Google sign up handler
+  const signUpWithGoogle = async (e) => {
+    e.preventDefault();
+    alert('Google sign up functionality simulation. Redirecting to Google OAuth...');
+    // try {
+    //   // Redirect to Google OAuth endpoint
+    //   window.location.href = '/api/auth/google'
+    // } catch (error) {
+    //   console.error('Google sign up error:', error)
+    //   alert('Google sign up is currently unavailable. Please try again later.')
+    // }
+  }
 </script>
