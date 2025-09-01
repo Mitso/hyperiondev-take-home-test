@@ -87,13 +87,9 @@
       <div class="secondary-header-inner flex items-center justify-center">
         <NuxtLink to="/course/register/software-engineering" class="menu-list__link">Contact course Adviser</NuxtLink>
         <a href="#" class="menu-list__link">My Profile</a>
-        <button class="menu-list__link menu-list__link-highlight text-white px-4 py-1 rounded">
-         
-          <NuxtLink to="/bootcamps/upgrade" class="menu-list__link menu-list__link-btn">
-            Upgrade to full Bootcamp
-          </NuxtLink>
-        
-        </button>
+        <NuxtLink to="/bootcamps/upgrade" class="menu-list__link menu-list__link-highlight text-white px-4 py-1 rounded menu-list__link-btn">
+          Upgrade to full Bootcamp
+        </NuxtLink>
       </div>
   </header>
   <!-- StEndart: Secondary Header Section -->

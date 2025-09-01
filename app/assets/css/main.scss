@@ -96,6 +96,14 @@ html, body {
     }
 }
 
+
+/*--------------------------------------*/
+
+.router-link-exact-active {
+    color: var(--gold);
+    text-decoration: underline;
+}
+
 .nav {
     &-cta__item {
         color: var(--white);
@@ -164,22 +172,15 @@ html, body {
                     }
                 }
             }
-            &-btn {
-                padding: 0;
-                &:hover {
-                    background-color: var(--dark-gold);
-                    text-decoration: none;
-                    color: white;
-                }
+            &-btn.router-link-exact-active {
+                background-color: var(--dark-gold);
+                color: var(--very-light-gray_0);
+                text-decoration: underline;
             }
         }
     }
 }
 
-.router-link-exact-active {
-    color: var(--gold);
-    text-decoration: underline;
-}
 
 .left-column {
     //background-color: var(--moderate-blue);
