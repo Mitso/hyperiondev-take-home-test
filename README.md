@@ -1,82 +1,157 @@
-# Hyperiondev Learning Portal
+# HyperionDev Learning Portal - Project Handover
 
+## Project Overview
+This is a Nuxt 3 application for HyperionDev's learning portal, featuring user registration, course enrollment, and a multi-step registration process for software engineering bootcamps.
 
-## Production
+## Tech Stack
+- **Frontend Framework:** Nuxt 3 (Vue 3)
+- **Language:** TypeScript
+- **State Management:** Pinia
+- **Styling:** TailwindCSS + SCSS
+- **Local Storage:** localforage
+- **Animations:** GSAP
 
-Build the application for production:
+## Prerequisites
+- Node.js (v18+)
+- npm/yarn/pnpm
+- Git
 
+## Local Development Setup
+
+1. **Clone the Repository**
+   ```bash
+   git clone git@github.com:Mitso/hyperiondev-take-home-test.git
+   cd hyperiondev-take-home-test
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:3000`
+
+## Project Structure
+```
+app/
+├── pages/                # All route pages
+│   ├── index.vue        # Main registration page
+│   └── course/
+│       └── register/
+│           └── software-engineering.vue  # Multi-step registration
+├── stores/              # Pinia stores
+│   ├── userAuth.ts     # Authentication state
+│   └── registrationProgress.ts  # Registration flow state
+├── components/         # Reusable components
+│   ├── step-one.vue   # Registration step 1
+│   └── step-two.vue   # Registration step 2
+├── app.vue            # Main app layout
+└── assets/
+    └── styles/
+        └── main.scss  # Global styles
+```
+
+## Key Tasks Features
+Please note and test the following pages functionality. Any other pages, links or buttons are placeholders and do not function or link somewhere.
+
+1. **Create Account Page** ✅
+Landing page - http://localhost:3000/
+   - Initial signup form (`pages/index.vue`)
+   - Google OAuth integration (not prepared)
+   - NB! Form validation and error handling on Create Account form only
+
+2. **Multi-step Course / Bootcamp Registration Page** ✅
+Redirects after created account: 
+- http://localhost:3000/course/register/software-engineering?step=1
+- http://localhost:3000/course/register/software-engineering?step=2
+   - Two-step registration process
+   - Progress tracking
+   - Navigation guards to prevent accidental exits
+   - Local state persistence
+   - NB! No form validation or form fields 2 way binding
+
+3. **My Profile Placeholder Page**
+   - Basic profile page & user info 
+
+4. **Dashboard Page**
+   - Basic dashboard page 
+   - NB! Skipped this page as per the requirement instruction 
+
+5. **Upgrade Bootcamp Page** ✅
+   - Basic updrage to full bootcamp page 
+
+6. **Portal Page** 🚫
+   - Not implemented
+   
+
+## Common Tasks
+
+### Running Tests
 ```bash
-# npm
+# No tests configured yet - TODO
+```
+
+### Building for Production
+```bash
+# Build the application
 npm run build
 
-```
-
-Locally preview production build:
-
-```bash
-# npm
+# Preview production build
 npm run preview
-
 ```
 
+### Adding New Pages
+1. Create new .vue file in `app/pages/`
+2. Use `<script setup>` syntax
+3. Add SEO meta with `useHead()`
+4. Import and use stores as needed
 
----
+### State Management
+- User authentication &  session management with Pinia: `useUserAuth()` store
+- Registration progress: `useRegistrationProgress()` store
+- Local storage & persistence: Use localforage for data that needs to persist
+- Nuxt / Vue routing and conditional UI
 
-## Issues
+## Known Issues
+1. Tailwind module extensibility not working as documented
+2. Google OAuth integration is not implemented
+3. reCAPTCHA mentioned in UI but not implemented
 
-Enviroment specific issues:
+## Future Improvements
+1. Add unit and integration tests
+2. Implement actual API endpoints
+3. Complete Google OAuth integration
+4. Add proper form validation library
+5. Implement reCAPTCHA
+6. Add error boundaries and better error handling
 
-- Nuxt/Tailwind module extensibility is not working when implemented as per documentation is https://tailwindcss.nuxtjs.org/tailwindcss/configuration
-- Tailwind version documentation show a different Nuxt integration config which is not compatible with the current nuxt app bootstrapped https://tailwindcss.com/docs/adding-custom-styles
+## Support & Resources
+- [Nuxt 3 Documentation](https://nuxt.com/docs)
+- [Vue 3 Documentation](https://vuejs.org/guide/introduction.html)
+- [Pinia Documentation](https://pinia.vuejs.org/)
+- [TailwindCSS Documentation](https://tailwindcss.com/docs)
 
----
+## Deployment
+Currently set up for local server. Follow these to prepare for basic deploynent steps:
 
+1. Build the application
+   ```bash
+   npm run build
+   ```
 
-## Copilot Instructions for HyperionDev Take-Home Test
+2. Preview the build
+   ```bash
+   npm run preview
+   ```
 
-### Project Overview
-- **Framework:** Nuxt 3 (Vue 3, Vite, TypeScript)
-- **UI:** TailwindCSS, Google Fonts, custom SCSS (`assets/styles/main.scss`)
-- **Pages:** All routes/pages are in `app/pages/` (e.g., `index.vue` for registration)
-- **App Shell:** `app/app.vue` defines the main layout, header, footer, and navigation.
+3. Deploy the `.output` directory to your hosting provider
 
-### Key Patterns & Conventions
-- **Component Structure:** Use `<script setup>` and composition API for logic.
-- **Form Handling:** Validation and error state are managed reactively in-page (see `index.vue`).
-- **API Calls:** Use `$fetch` for server communication (e.g., `/api/auth/register`).
-- **Navigation:** Use `navigateTo()` for client-side routing.
-- **Meta/SEO:** Use `useHead()` in each page for meta tags.
-
-### Developer Workflows
-- **Development:**
-  - Start dev server: `npm run dev`
-- **Build for Production:**
-  - `npm run build`
-  - Preview: `npm run preview`
-- **Dependencies:**
-  - Install: `npm install`
-- **Styling:**
-  - Tailwind config is managed by Nuxt module; custom styles in `assets/styles/main.scss`.
-
-### Integration Points
-- **Google OAuth:** `/api/auth/google` endpoint for sign-up (see `signUpWithGoogle` in `index.vue`).
-- **reCAPTCHA:** UI mentions Google reCAPTCHA, but no explicit integration code is present.
-- **Fonts:** Managed via `@nuxtjs/google-fonts` in `nuxt.config.ts`.
-
-### Notable Files
-- `.nuxt`: Auto-generated build files (ignore for edits).
-- `app/app.vue`: Main layout, navigation, and footer.
-- `app/pages/index.vue`: Registration form, validation, and UI patterns.
-- `assets/styles/main.scss`: Custom global styles.
-- `nuxt.config.ts`: Nuxt, Vite, and module configuration.
-- `tsconfig.json`: TypeScript configuration and path aliases.
-- `package.json`: Scripts and dependencies.
-- `package-lock.json`: Lockfile for npm dependencies.
-
-### Project-Specific Advice
-- **Follow the composition API and `<script setup>` for new components.**
-- **Use Tailwind utility classes for layout and design.**
-- **API endpoints are assumed to exist; mock as needed for local dev.**
-- **No test or lint scripts are defined—add as needed.**
-
----
+## Questions?
+For any questions about the project setup or architecture, please refer to:
+- The inline code documentation
+- `.github/copilot-instructions.md` for AI-assisted development guidelines
+- `README.md` for basic setup instructions
