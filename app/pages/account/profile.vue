@@ -1,13 +1,11 @@
 <template>
-    <div class="w-full mx-auto p-6 bg-[#F2F2F2] min-h-screen">
+    <div class="w-full mx-auto p-4 lg:p-6 bg-[#F2F2F2] min-h-screen">
         <h1 class="text-5xl font-semibold mb-6 text-center">
             Welcome to your Profile
         </h1>
         <div class="text-lg text-gray-800 text-center flex flex-col items-center space-y-6">
             <h2 class="text-2xl font-semibold mb-6 text-center">Manage your details, password and subscription here.</h2>
-            <div class="details w-[40%] mx-auto mb-16 bg-white rounded-2xl p-8 shadow-2xl">
-
-
+            <div class="details w-full lg:w-[40%] mx-auto m-8 lg:mb-16 bg-white rounded-2xl p-4 lg:p-8 shadow-2xl">
               
                 <div class="flex justify-between space-x-8">
                     <div class="col-md-3 body-left-space">

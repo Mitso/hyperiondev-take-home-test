@@ -1,10 +1,10 @@
 <!-- page: Account Register -->
 <template>
-    <div class="account min-h-screen">
-        <div class="account-register flex min-h-screen">
+    <div class="account lg:min-h-screen">
+        <div class="account-register flex flex-col-reverse lg:flex-row lg:min-h-screen">
             <!-- Start: Left Column -->
-            <div class="left-column w-1/2">
-                <div class="left-column__inner w-full h-full flex items-center justify-center p-12">
+            <div class="left-column w-full lg:w-1/2">
+                <div class="left-column__inner w-full h-full flex items-center justify-center p-4 lg:p-12">
                     <!-- Account Registration | Hyperion Job Statistics -->
                     <div class="account-register__stats stats px-8 text-center">
                         <div class="flex items-center">
@@ -29,8 +29,8 @@
             <!-- End: Left Column -->
 
              <!-- Start: Right Column -->
-            <div class="right-column w-1/2 bg-white flex flex-col">
-                <div class="right-column__inner flex-1 flex flex-col items-center justify-center p-12">
+            <div class="right-column lg:w-1/2 bg-white flex flex-col">
+                <div class="right-column__inner flex-1 flex flex-col items-center justify-center p-4 lg:p-12">
                    
                   <!-- Create Account | Signup Description -->
                     <div class="account-register__heading mb-8">
@@ -38,7 +38,7 @@
                     </div>
 
                     <!-- Create Account | Signup Form -->
-                    <form @submit="handleSubmit" class="account-register__signup signup max-w-[65%]" novalidate>
+                    <form @submit="handleSubmit" class="account-register__signup signup w-full lg:max-w-[65%]" novalidate>
                         <div class="signup-field">
                             <input
                               v-model="form.fullName"

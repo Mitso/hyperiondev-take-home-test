@@ -15,8 +15,8 @@
   <!-- Start: Primary Header Section -->
     <!-- Navigation -->
     <header class="header h-18 px-4 lg:px-12 py-4 shadow-md w-full">
-      <nav class="nav flex items-center justify-between flex justify-between items-center ">
-        <div class="menu flex space-x-8">
+      <nav class="nav flex flex-col lg:flex-row items-center justify-between">
+        <div class="menu flex flex-col lg:flex-row space-x-8">
           <NuxtLink to="/" class="logo">
             <img 
               alt="HyperionDev" 
@@ -26,7 +26,7 @@
               class="logo__image"
             />
           </NuxtLink>
-          <ul class="menu-list flex items-center">
+          <ul class="menu-list hidden lg:flex flex-col lg:flex-row items-center">
             <li class="menu-list__item">
               <button class="menu-list__link menu-list__link-highlight dropdown !flex items-center justify-between space-x-1">
                 <span>Explore courses</span>
@@ -83,8 +83,8 @@
   <!-- End: Primary Header Section -->
 
   <!-- Start: Secondary Header Section -->
-  <header v-if="userAuth.isAuthenticated" class="bootcamp-secondary-header secondary-header bg-slate-800 text-white py-4 px-12">
-      <div class="secondary-header-inner flex items-center justify-center">
+  <header v-if="userAuth.isAuthenticated" class="bootcamp-secondary-header secondary-header bg-slate-800 text-white py-4 px-4 lg:px-12">
+      <div class="secondary-header-inner flex flex-col lg:flex-row items-center justify-center">
         <NuxtLink to="/" class="menu-list__link">Contact course Adviser</NuxtLink>
         
         <NuxtLink to="/account/profile" class="menu-list__link">My Profile</NuxtLink>

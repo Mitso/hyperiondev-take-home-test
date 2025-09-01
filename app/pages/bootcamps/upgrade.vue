@@ -6,41 +6,41 @@
     </div>
 
     <!-- Main Content -->
-    <main class="px-0 py-12">
+    <main class="upgrage-wrapper px-0 py-8 lg:py-12">
       <!-- Countdown Section -->
-      <section class="text-center text-white mb-16">
-        <h1 class="text-4xl md:text-5xl font-bold mb-8">
+      <section class="countdown-section text-center text-white mb-16">
+        <h1 class="text-2xl lg:text-4xl md:text-5xl font-bold mb-4 lg:mb-8">
           Next Software Engineering cohort starts in
         </h1>
         
-        <div class="flex justify-center space-x-4 mb-8">
-          <div class="bg-white text-gray-900 rounded-lg p-6 min-w-[80px]">
+        <div class="flex justify-center space-x-2 lg:space-x-4 mb-8">
+          <div class="bg-white text-gray-900 rounded-lg p-2 lg:p-6 min-w-[20%] lg:min-w-[80px]">
             <div class="text-3xl font-bold">{{ countdown.days }}</div>
             <div class="text-sm text-gray-600">Days</div>
           </div>
-          <div class="bg-white text-gray-900 rounded-lg p-6 min-w-[80px]">
-            <div class="text-3xl font-bold">{{ countdown.hours }}</div>
+          <div class="bg-white text-gray-900 rounded-lg p-2 lg:p-6 min-w-[20%] lg:min-w-[80px]">
+            <div class="text-2xl lg:text-3xl font-bold">{{ countdown.hours }}</div>
             <div class="text-sm text-gray-600">Hours</div>
           </div>
-          <div class="bg-white text-gray-900 rounded-lg p-6 min-w-[80px]">
-            <div class="text-3xl font-bold">{{ countdown.minutes }}</div>
+          <div class="bg-white text-gray-900 rounded-lg p-2 lg:p-6 min-w-[20%] lg:min-w-[80px]">
+            <div class="text-2xl lg:text-3xl font-bold">{{ countdown.minutes }}</div>
             <div class="text-sm text-gray-600">Minutes</div>
           </div>
-          <div class="bg-white text-gray-900 rounded-lg p-6 min-w-[80px]">
-            <div class="text-3xl font-bold">{{ countdown.seconds }}</div>
+          <div class="bg-white text-gray-900 rounded-lg p-2 lg:p-6 min-w-[20%] lg:min-w-[80px]">
+            <div class="text-2xl lg:text-3xl font-bold">{{ countdown.seconds }}</div>
             <div class="text-sm text-gray-600">Seconds</div>
           </div>
         </div>
 
-        <div class="text-lg mb-8">
+        <div class="countdown-desc text-lg mb-4 lg:mb-8">
           Due to high demand and limits on enrollment set by the University, there are only 
           <span class="font-bold text-2xl">20</span> places remaining for students for the 2025 academic year.
         </div>
       </section>
 
       <!-- Pricing Options -->
-      <section class="max-w-6xl mx-auto mb-16">
-        <div class="bg-white rounded-2xl p-8 shadow-2xl">
+      <section class="pricing-section w-full lg:max-w-6xl mx-auto mb-16 p-2 lg:p-0">
+        <div class="pricing-section--inner bg-white rounded-2xl p-4 lg:p-8 shadow-2xl">
           <h2 class="text-4xl font-bold text-center mb-6 text-gray-900">
             You've got options...
           </h2>
@@ -129,10 +129,10 @@
 
 
       <div class="services w-full bg-white flex items-start justify-center flex-col lg:flex-row lg:space-x-8 mx-auto my-0 pt-8">
-        <div class="services--inner border-b-2 max-w-6xl">
+        <div class="services--inner border-b-2 lg:max-w-6xl">
           <!-- Student Loan Section -->
-          <section class="student-loan-section mx-auto text-center mb-8">
-            <div class="student-loan-inner border-b-2 p-8">
+          <section class="student-loan-section mx-auto text-center mb-4 lg:mb-8">
+            <div class="student-loan-inner border-b-2 p-4 lg:p-8">
               <div class="flex items-center justify-center mb-4">
                 <div class="pr-3 flex items-center justify-center">
                   🏛️
@@ -154,8 +154,8 @@
           </section>
 
           <!-- Support Section -->
-          <section class="support-section mx-auto text-center mb-16">
-            <div class="p-8">
+          <section class="support-section mx-auto text-center mb-4 lg:mb-16">
+            <div class="support-section--inner p-4 lg:p-8">
               <div class="flex items-start justify-center mb-4">
                 <h2 class="text-3xl font-bold text-gray-900 mb-6">We're standing by...</h2>
               </div>
@@ -179,12 +179,10 @@
       </div>
      
       
-
-  
       <!-- Success Story max-w-6xl shadow-2xl -->
-      <section class="testimonial bg-white w-full mx-auto mb-16 pt-8">
-        <div class="testimonial--inner p-8 text-center">
-          <h2 class="text-5xl font-bold text-center text-[#333]">
+      <section class="testimonial bg-white w-full mx-auto mb-4 lg:mb-16 pt-4 lg:pt-8">
+        <div class="testimonial--inner p-4 lg:p-8 text-center">
+          <h2 class="text-2xl lg:text-5xl font-bold text-center text-[#333]">
             From Politics to Data Analyst in 3 months
           </h2>
          
@@ -193,7 +191,7 @@
             <p class="text-gray-500 text-lg">Data Science Bootcamp Graduate</p>
           </div>
           
-          <div class="bg-gray-200 rounded-xl overflow-hidden" style="margin: 0 auto; left: 0; width: 60%; height: auto; position: relative; padding-bottom: 30%;">
+          <div class="testimonial--video bg-gray-200 rounded-xl overflow-hidden">
             <iframe src="https://www.youtube.com/embed/CnCR3ZDu5EA?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *; web-share *;"></iframe>
           </div>
           <div class="pt-8">
@@ -207,7 +205,7 @@
       </section>
 
       <!-- Trustpilot Section -->
-      <section class="max-w-2xl mx-auto text-center">
+      <section class="trustpilot-section w-full lg:max-w-2xl mx-auto text-center p-4 lg:p-0">
         <div class="bg-white rounded-2xl p-8 shadow-2xl">
           <div class="flex justify-center mb-4">
             <div class="text-green-600 text-2xl font-bold">★ Trustpilot</div>

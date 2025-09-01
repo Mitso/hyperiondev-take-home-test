@@ -160,7 +160,7 @@
                             v-model="form.phoneNumber"
                             type="tel"
                             placeholder="Enter phone number"
-                            class="flex-1 px-4 py-3 border border-gray-300 rounded-r-lg"
+                            class="flex-1 px-4 w-full lg:w-auto py-3 border border-gray-300 rounded-r-lg"
                         />
                     </div>
                 </div>

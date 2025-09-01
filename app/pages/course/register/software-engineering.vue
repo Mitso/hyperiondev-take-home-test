@@ -2,13 +2,13 @@
 <template>
     <div class="bootcamp min-h-screen bg-gray-50">
       <!-- Main Content -->
-      <div class="bootcamp-info info max-w-4xl mx-auto py-12 px-6">
+      <div class="bootcamp-info info lg:max-w-4xl mx-auto py-4 lg:py-12 px-2 lg:px-6">
         <!-- Registration Header -->
         <div class="info-header text-center mb-8">
           <div class="info-intro flex items-center justify-center mb-6">
               <img class="info-icon mr-4" src="/assets/images/hd-se-icon.svg" alt="Computer Icon" width="80px" height="75px" />
               <div class="info-heading text-left">
-              <h1 class="info-title text-5xl font-bold text-slate-800">Registration</h1>
+              <h1 class="info-title text-2xl lg:text-5xl font-bold text-slate-800">Registration</h1>
               <p class="info-subtitle text-sm text-slate-600">Software Engineer Bootcamp</p>
               </div>
           </div>
@@ -17,8 +17,8 @@
           
           <!-- Progress indicator -->
           <div class="info-step-indicator flex items-center justify-center mb-8">
-              <div class="flex items-center">
-              <span class="text-yellow-600 text-sm font-medium mr-4">Step {{  registrationProgress.currentStep  }} of 2</span>
+              <div class="flex flex-col lg:flex-row items-center">
+              <span class="text-yellow-600 text-sm font-medium mr-4 pb  -2">Step {{  registrationProgress.currentStep  }} of 2</span>
               <div class="flex space-x-2">
                   <div class="w-32 h-2 bg-yellow-500 rounded-full"></div>
                   <div 
