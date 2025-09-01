@@ -1,18 +1,5 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-500 via-teal-400 to-green-400">
-    <!-- Header -->
-    <!-- <header class="flex justify-between items-center p-6 bg-white/10 backdrop-blur-sm">
-      <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 bg-white rounded flex items-center justify-center">
-          <span class="text-blue-600 font-bold text-lg">H</span>
-        </div>
-        <span class="text-white font-semibold text-xl">HyperionDev</span>
-      </div>
-      <button class="text-white hover:text-gray-200 transition-colors">
-        Go to App ↗
-      </button>
-    </header> -->
-
     <!-- Promotion Banner -->
     <div class="text-center py-4 bg-green-500 text-white font-semibold">
       Go bold. Get ahead. 🎯 30% OFF
@@ -172,7 +159,6 @@
               <div class="flex items-start justify-center mb-4">
                 <h2 class="text-3xl font-bold text-gray-900 mb-6">We're standing by...</h2>
               </div>
-              
               
               <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
                 Our Admissions Consultants are here to help. Simply book a convenient time for 
