@@ -85,8 +85,10 @@
   <!-- Start: Secondary Header Section -->
   <header v-if="userAuth.isAuth" class="bootcamp-secondary-header secondary-header bg-slate-800 text-white py-4 px-12">
       <div class="secondary-header-inner flex items-center justify-center">
-        <NuxtLink to="/course/register/software-engineering" class="menu-list__link">Contact course Adviser</NuxtLink>
-        <a href="#" class="menu-list__link">My Profile</a>
+        <NuxtLink to="/" class="menu-list__link">Contact course Adviser</NuxtLink>
+        
+        <NuxtLink to="/account/profile" class="menu-list__link">My Profile</NuxtLink>
+       
         <NuxtLink to="/bootcamps/upgrade" class="menu-list__link menu-list__link-highlight text-white px-4 py-1 rounded menu-list__link-btn">
           Upgrade to full Bootcamp
         </NuxtLink>

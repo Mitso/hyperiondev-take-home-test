@@ -247,3 +247,20 @@ html, body {
 }
 
 
+
+/*--------------------------------------*/
+/* Animation */
+
+.split {
+    opacity: 0;
+    text-align:center;
+    color: white;
+    font-size: clamp(1rem, 2.2rem, 3vw);
+    letter-spacing: 0.05rem;
+    will-change: transform;
+    line-height: 1.15;
+}
+
+.split * {
+  will-change: transform;
+}

@@ -16,7 +16,7 @@
                             class="stats-heading mx-auto my-0"/>
                         </div>
                         <div class="relative text-center mt-12">
-                          <p class="stats-salary-txt text-white text-2xl font-medium">
+                          <p class="stats-salary-txt split text-white font-medium">
                             According to the 2024 Graduate Outcomes Report, graduates of HyperionDev bootcamps have seen an average salary increase. This figure is based on verified graduate data.
                           </p>
                           <p class="stats-salary-txt text-white text-2xl font-medium mt-4">
@@ -137,6 +137,8 @@
 </template>
 
 <script setup>
+  import { gsap } from 'gsap';
+  import { SplitText } from 'gsap/SplitText';
   import localforage from 'localforage';
    
   // SEO and meta
@@ -148,7 +150,26 @@
     ]
   })
 
+  gsap.registerPlugin(SplitText);
   onMounted(() => {
+    gsap.set(".split", { opacity: 1 });
+    let split;
+    SplitText.create(".split", {
+      type: "words,lines",
+      linesClass: "line",
+      autoSplit: true,
+      mask: "lines",
+      onSplit: (self) => {
+        split = gsap.from(self.lines, {
+          duration: 0.8,
+          yPercent: 100,
+          opacity: 0,
+          stagger: 0.1,
+          ease: "expo.out",
+        });
+        return split;
+      }
+    })
     console.log('Index Page: On mounted');
   })
 
