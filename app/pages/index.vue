@@ -140,6 +140,7 @@
   import { gsap } from 'gsap';
   import { SplitText } from 'gsap/SplitText';
   import localforage from 'localforage';
+  import { useUserAuth } from '~/stores/userAuth'
    
   // SEO and meta
   useHead({
@@ -231,7 +232,8 @@
     return isValid
   }
 
-  // Form submission handler
+  const userAuth = useUserAuth()
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     
@@ -247,18 +249,17 @@
     isSubmitting.value = true
 
     try {
-      const data = await localforage.setItem('user', {
+      const user = {
         fullName: form.fullName.trim(),
         email: form.email.trim().toLowerCase(),
         password: form.password,
         jwt: 'fake-jwt-token',
         signedIn: true
-      })
+      }
 
-      // Handle success
+      const data = await localforage.setItem('user', user)     
+      userAuth.setUser(user)
       console.log('Registration successful:', data)
-
-      // Redirect to success registration page step !!!
       await navigateTo({
         path: '/course/register/software-engineering',
         query: { step: 1 }
@@ -271,16 +272,8 @@
     }
   }
 
-  // Google sign up handler
   const signUpWithGoogle = async (e) => {
     e.preventDefault();
     alert('Google sign up functionality simulation. Redirecting to Google OAuth...');
-    // try {
-    //   // Redirect to Google OAuth endpoint
-    //   window.location.href = '/api/auth/google'
-    // } catch (error) {
-    //   console.error('Google sign up error:', error)
-    //   alert('Google sign up is currently unavailable. Please try again later.')
-    // }
   }
 </script>

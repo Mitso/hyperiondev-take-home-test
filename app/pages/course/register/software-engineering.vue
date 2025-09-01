@@ -18,12 +18,12 @@
           <!-- Progress indicator -->
           <div class="info-step-indicator flex items-center justify-center mb-8">
               <div class="flex items-center">
-              <span class="text-yellow-600 text-sm font-medium mr-4">Step {{  currentStep  }} of 2</span>
+              <span class="text-yellow-600 text-sm font-medium mr-4">Step {{  registrationProgress.currentStep  }} of 2</span>
               <div class="flex space-x-2">
                   <div class="w-32 h-2 bg-yellow-500 rounded-full"></div>
                   <div 
                     class="w-32 h-2 bg-gray-300 rounded-full"
-                    :class="{ 'bg-yellow-500': currentStep > 1 }"
+                    :class="{ 'bg-yellow-500': registrationProgress.currentStep > 1 }"
                   ></div>
               </div>
               </div>
@@ -41,6 +41,8 @@
 
 <script setup>
 import localforage from 'localforage';
+import { useRegistrationProgress } from '~/stores/registrationProgress'
+
 
 // SEO
 useHead({
@@ -70,20 +72,29 @@ const courseRegFormStep2 = reactive({
   learningSchedule: ''
 });
 
-const currentStep = ref(1);
 
 const route = useRoute()
 const router = useRouter()
 
+const registrationProgress = useRegistrationProgress()
 // Watch for changes in the route's query parameter and update the step
 watch(() => route.query.step, (newStep) => {
   if (newStep) {
-    currentStep.value = parseInt(newStep, 10);
+    registrationProgress.setStep(parseInt(newStep, 10))
+    registrationProgress.completed = (newStep === registrationProgress.totalSteps)
   } else {
     // If no query parameter exists, always default to step 1
-    currentStep.value = 1;
+    registrationProgress.setStep(1)
   }
 }, { immediate: true });
+
+onBeforeRouteLeave((to, from) => {
+  if (!registrationProgress.completed) {
+    if (!confirm('You have not completed your registration. Are you sure you want to leave this page?')) {
+      return false
+    }
+  }
+})
 
 const handleGoToStep2 = (payload) => {
   //Step 1: Data Save
@@ -91,6 +102,7 @@ const handleGoToStep2 = (payload) => {
 
   //Route to Step 2
   router.push({ query: { ...route.query, step: 2 } });
+  registrationProgress.setStep(2)
 };
 
 const handleGoBackToStep1 = () => {
@@ -100,6 +112,8 @@ const handleGoBackToStep1 = () => {
 
 // Form submission handler
 const handleAllStepsFormSubmit = async (payload) => {
+  registrationProgress.completed = (true)
+  
   //Step 2: Data Save
   Object.assign(courseRegFormStep2, payload.data);
   
@@ -121,7 +135,7 @@ const handleAllStepsFormSubmit = async (payload) => {
 }
 
 const activeComponent = computed(() => {
-  return currentStep.value === 1 ? stepOne : stepTwo;
+  return registrationProgress.currentStep === 1 ? stepOne : stepTwo;
 });
 
 </script>

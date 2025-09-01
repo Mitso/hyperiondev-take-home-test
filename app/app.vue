@@ -61,12 +61,13 @@
         
         <div class="nav-cta flex center items-center space-x-4">
           <div class="flex justify-center items-center space-x-2">
-            <template v-if="userAuth.isAuth">
-              <NuxtLink v-if="!isSignedIn" to="/login" class="nav-cta__item text-white hover:text-gray-800">Sign In</NuxtLink>
+            <template v-if="userAuth.isAuthenticated">
+              <NuxtLink v-if="!userAuth.user.signedIn" to="/login" class="nav-cta__item text-white hover:text-gray-800">Sign In</NuxtLink>
               <NuxtLink to="/account/dashboard" class="nav-cta__item text-white hover:text-gray-800">Dashboard</NuxtLink>
               <span class="nav-cta__item block w-[2px] h-8 bg-white"></span>
               <button @click="logout" class="nav-cta__btn border-2 border-white text-white px-4 py-1 rounded">Log out</button>
             </template>
+
             <template v-else>
                 <NuxtLink to="/" class="nav-cta__item text-white hover:text-gray-800">Sign Up</NuxtLink>
                 <span class="nav-cta__item block">/</span>
@@ -75,7 +76,6 @@
                 <button class="nav-cta__btn border-2 border-white text-white px-4 py-1 rounded">Begin trial</button>
             </template>
            
-           
           </div>
         </div>
       </nav>
@@ -83,11 +83,13 @@
   <!-- End: Primary Header Section -->
 
   <!-- Start: Secondary Header Section -->
-  <header v-if="userAuth.isAuth" class="bootcamp-secondary-header secondary-header bg-slate-800 text-white py-4 px-12">
+  <header v-if="userAuth.isAuthenticated" class="bootcamp-secondary-header secondary-header bg-slate-800 text-white py-4 px-12">
       <div class="secondary-header-inner flex items-center justify-center">
         <NuxtLink to="/" class="menu-list__link">Contact course Adviser</NuxtLink>
         
         <NuxtLink to="/account/profile" class="menu-list__link">My Profile</NuxtLink>
+       
+        <NuxtLink v-if="courseDataLength === 0 && !registrationProgress.completed" :to="`/course/register/software-engineering?step=${registrationProgress.currentStep}`" class="menu-list__link">Complete Bootcamp Registration</NuxtLink>
        
         <NuxtLink to="/bootcamps/upgrade" class="menu-list__link menu-list__link-highlight text-white px-4 py-1 rounded menu-list__link-btn">
           Upgrade to full Bootcamp
@@ -116,39 +118,31 @@
 
 <script setup>
   import localforage from 'localforage';
- 
-  const { userAuth, setUserAuth } = useStore()
+  import { useUserAuth } from '~/stores/userAuth'
+  import { useRegistrationProgress } from '~/stores/registrationProgress'
 
-  const userData = ref(null);
- 
-  const isSignedIn = ref(false);
+  const userAuth = useUserAuth()
+  const registrationProgress = useRegistrationProgress()
+
+  let userData = reactive({})
+  let courseData = reactive({})
+  const courseDataLength = ref(0)
 
   onMounted(async () => {
-    console.log('Global App Page: On mounted');
-    // Check if user is technically authenticated and get their basic info
-    try {
-      userData.value = await localforage.getItem('user')
-      if (userData.value) {
-        setUserAuth(true)
-
-        isSignedIn.value = userData.value.signedIn ?? false;
-      }
-    } catch (error) {
-      setUserAuth(false)
-      // If not technically authenticated, redirect to signup
-      await navigateTo('/')
-    }
+    // Check if user state is technically authenticated and get their basic info
+    if(!userAuth.user) await navigateTo('/')
+    userData = await localforage.getItem('user')
+    courseData = await localforage.getItem('courseRegForm')
+    courseDataLength.value = Object.entries(courseData.body).lengt
+    userAuth.setUser(userData)
   })
  
-  
   const logout = async () => {
     try {
       await localforage.removeItem('user');
       await localforage.removeItem('courseRegForm');
-     
-      setUserAuth(false)
-
       await navigateTo('/');
+      userAuth.logout()
     } catch (error) {
       console.error('Error during logout:', error);
     }
